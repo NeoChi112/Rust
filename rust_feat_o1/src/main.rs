@@ -92,13 +92,13 @@ impl Pot {
     }
     
 }
-struct Streaming_Pot{
+struct StreamingPot{
     pot: Pot,
     layer: i32,
 }
-impl Streaming_Pot{
-    fn new(pot: Pot, layer: i32) -> Streaming_Pot {
-        Streaming_Pot { pot, layer }
+impl StreamingPot{
+    fn new(pot: Pot, layer: i32) -> StreamingPot {
+        StreamingPot { pot, layer }
     }
     fn get_layer(&self) -> i32 {
         self.layer
@@ -111,13 +111,13 @@ impl Streaming_Pot{
         self.show_layer();
     }
 }
-struct Noodle_Pot{
+struct NoodlePot{
     pot: Pot,
     compartment: i32,
 }
-impl Noodle_Pot{
-    fn new(pot: Pot, compartment: i32) -> Noodle_Pot {
-        Noodle_Pot { pot, compartment }
+impl NoodlePot{
+    fn new(pot: Pot, compartment: i32) -> NoodlePot {
+        NoodlePot { pot, compartment }
     }
     fn get_compartment(&self) -> i32 {
         self.compartment
@@ -161,19 +161,19 @@ fn main() {
 
     println!();
 
-    let sp1 = Streaming_Pot::new(p1, 2);
-    let sp2 = Streaming_Pot::new(p2, 3);
+    let sp1 = StreamingPot::new(p1, 2);
+    let sp2 = StreamingPot::new(p2, 3);
 
     sp1.show_all();
     sp2.show_all();
 
     println!();
 
-    let np1 = Noodle_Pot::new(
+    let np1 = NoodlePot::new(
         Pot::new(150.0, 12, 22, 2, Rc::clone(&s1)),
         2);
     
-    let np2 = Noodle_Pot::new(
+    let np2 = NoodlePot::new(
         Pot::new(250.0, 17, 27, 3, Rc::clone(&s2)),
         3);
     np1.show_all();
