@@ -11,6 +11,7 @@ enum TopsType {
     Shirt,
     Polo,
 }
+#[derive(Clone, Copy)]
 enum PantsLength {
     Short,
     Long,
@@ -84,6 +85,32 @@ struct Pants {
     clothes: Clothes,
     length: PantsLength,
 }
+impl Pants {
+    fn new(price: f32, size: SizeClothes, length: PantsLength) -> Pants {
+        Pants {
+            clothes: Clothes::new(price, size),
+            length,
+        }
+    }
+    fn get_length(&self) -> PantsLength {
+        self.length
+    }
+    fn set_length(&mut self, length: PantsLength) {
+        self.length = length;
+    }
+    fn show_length(&self) {
+        match self.get_length() {
+            PantsLength::Short => println!("Length: Short"),
+            PantsLength::Long => println!("Length: Long"),
+        }
+    }
+    fn show_info(&self) {
+        println!("Pants Info: ");
+        self.clothes.show_info();
+        self.show_length();
+        println!();
+    }
+}
 struct Size {
     width: i32,
     length: i32,
@@ -103,4 +130,10 @@ fn main() {
     t2.set_types(TopsType::Shirt);
     t1.show_info();
     t2.show_info();
+
+    let p1 = Pants::new(20.0, SizeClothes::Medium, PantsLength::Long);
+    let mut p2 = Pants::new(0.0, SizeClothes::Medium, PantsLength::Long);
+    p2.set_length(PantsLength::Short);
+    p1.show_info();
+    p2.show_info();
 }
