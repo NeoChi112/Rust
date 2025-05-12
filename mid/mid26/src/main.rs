@@ -5,6 +5,7 @@ enum SizeClothes {
     Large,
     ExtraLarge,
 }
+#[derive(Clone, Copy)]
 enum TopsType {
     TShirt,
     Shirt,
@@ -43,16 +44,42 @@ impl Clothes {
         }
     }
     fn show_info(&self) {
-        println!("Clothes Info: ");
         println!("Price: {}", self.get_price());
         self.show_size();
-        println!();
     }
 }
 struct Tops {
     clothes: Clothes,
     types: TopsType,
 }
+impl Tops {
+    fn new(price: f32, size: SizeClothes, types: TopsType) -> Tops {
+        Tops {
+            clothes: Clothes::new(price, size),
+            types,
+        }
+    }
+    fn get_types(&self) -> TopsType {
+        self.types
+    }
+    fn set_types(&mut self, types: TopsType) {
+        self.types = types;
+    }
+    fn show_types(&self) {
+        match self.get_types() {
+            TopsType::TShirt => println!("Type: T-Shirt"),
+            TopsType::Shirt => println!("Type: Shirt"),
+            TopsType::Polo => println!("Type: Polo"),
+        }
+    }
+    fn show_info(&self) {
+        println!("Tops Info: ");
+        self.clothes.show_info();
+        self.show_types();
+        println!();
+    }
+}
+
 struct Pants {
     clothes: Clothes,
     length: PantsLength,
@@ -70,11 +97,10 @@ struct Wardrobe {
     amount_of_pants: i32,
 }
 fn main() {
-    let c1 = Clothes::new(10.0, SizeClothes::Small);
 
-    let mut c2 = Clothes::new(0.0, SizeClothes::Small);
-    c2.set_price(20.0);
-    c2.set_size(SizeClothes::Medium);
-    c1.show_info();
-    c2.show_info();
+    let t1 = Tops::new(10.0, SizeClothes::Small, TopsType::TShirt);
+    let mut t2 = Tops::new(0.0, SizeClothes::Small, TopsType::TShirt);
+    t2.set_types(TopsType::Shirt);
+    t1.show_info();
+    t2.show_info();
 }
