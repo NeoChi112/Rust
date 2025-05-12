@@ -28,7 +28,7 @@ impl Clothes {
         self.price
     }
     fn get_size(&self) -> SizeClothes {
-        self.size
+        self.size.clone()
     }
     fn set_price(&mut self, price: f32) {
         self.price = price;
@@ -49,6 +49,7 @@ impl Clothes {
         self.show_size();
     }
 }
+
 struct Tops {
     clothes: Clothes,
     types: TopsType,
@@ -111,6 +112,7 @@ impl Pants {
         println!();
     }
 }
+#[derive(Clone, Copy)]
 struct Size {
     width: i32,
     length: i32,
@@ -122,6 +124,93 @@ struct Wardrobe {
     pants: Vec<Pants>,
     amount_of_tops: i32,
     amount_of_pants: i32,
+}
+impl Wardrobe{
+    fn new(size: Size, amount_of_tops: i32, amount_of_pants: i32) -> Wardrobe {
+        Wardrobe {
+            size,
+            tops: Vec::new(),
+            pants: Vec::new(),
+            amount_of_tops,
+            amount_of_pants,
+        }
+    }
+    fn add_top(&mut self, top: Tops) {
+        if self.tops.len() < self.amount_of_tops as usize {
+            self.tops.push(top);
+        } else {
+            println!("Cannot add more tops to the wardrobe.");
+        }
+    }
+    fn add_pant(&mut self, pant: Pants) {
+        if self.pants.len() < self.amount_of_pants as usize {
+            self.pants.push(pant);
+        } else {
+            println!("Cannot add more pants to the wardrobe.");
+        }
+    }
+    fn show_info(&self) {
+        println!("Wardrobe Size: {}x{}x{}", self.size.width, self.size.length, self.size.height);
+        println!("Amount of Tops: {}", self.amount_of_tops);
+        println!("Amount of Pants: {}", self.amount_of_pants);
+        println!("Tops in Wardrobe: ");
+        for top in &self.tops {
+            top.show_info();
+        }
+        println!("Pants in Wardrobe: ");
+        for pant in &self.pants {
+            pant.show_info();
+        }
+    }
+    fn get_size(&self) -> Size {
+        self.size
+    }
+    fn set_size(&mut self, size: Size) {
+        self.size = size;
+    }
+    fn get_amount_of_tops(&self) -> i32 {
+        self.amount_of_tops
+    }
+    fn set_amount_of_tops(&mut self, amount_of_tops: i32) {
+        self.amount_of_tops = amount_of_tops;
+    }
+    fn get_amount_of_pants(&self) -> i32 {
+        self.amount_of_pants
+    }
+    fn set_amount_of_pants(&mut self, amount_of_pants: i32) {
+        self.amount_of_pants = amount_of_pants;
+    }
+    fn get_tops(&self) -> &Vec<Tops> {
+        &self.tops
+    }
+    fn get_pants(&self) -> &Vec<Pants> {
+        &self.pants
+    }
+    fn set_tops(&mut self, tops: Vec<Tops>) {
+        self.tops = tops;
+    }
+    fn set_pants(&mut self, pants: Vec<Pants>) {
+        self.pants = pants;
+    }
+    fn show_tops(&self) {
+        for top in &self.tops {
+            top.show_info();
+        }
+    }
+    fn show_pants(&self) {
+        for pant in &self.pants {
+            pant.show_info();
+        }
+    }
+    fn show_size(&self) {
+        println!("Wardrobe Size: {}x{}x{}", self.size.width, self.size.length, self.size.height);
+    }
+    fn show_amount_of_tops(&self) {
+        println!("Amount of Tops: {}", self.amount_of_tops);
+    }
+    fn show_amount_of_pants(&self) {
+        println!("Amount of Pants: {}", self.amount_of_pants);
+    }
 }
 fn main() {
 
@@ -136,4 +225,47 @@ fn main() {
     p2.set_length(PantsLength::Short);
     p1.show_info();
     p2.show_info();
+
+    let size = Size {
+        width: 100,
+        length: 200,
+        height: 300,
+    };
+    let mut wardrobe = Wardrobe::new(size, 5, 5);
+    wardrobe.add_top(t1);
+    wardrobe.add_top(t2);
+    wardrobe.add_pant(p1);
+    wardrobe.add_pant(p2);
+    wardrobe.show_info();
+    wardrobe.set_size(Size {
+        width: 200,
+        length: 300,
+        height: 400,
+    });
+    wardrobe.show_size();
+    wardrobe.set_amount_of_tops(10);
+    wardrobe.show_amount_of_tops();
+    wardrobe.set_amount_of_pants(10);
+    wardrobe.show_amount_of_pants();
+    wardrobe.show_tops();
+    wardrobe.show_pants();
+
+    wardrobe.set_tops(
+        vec![
+            Tops::new(15.0, SizeClothes::Large, TopsType::Polo),
+            Tops::new(25.0, SizeClothes::ExtraLarge, TopsType::TShirt),
+        ],
+    );
+    wardrobe.set_pants(
+        vec![
+            Pants::new(30.0, SizeClothes::Large, PantsLength::Short),
+            Pants::new(40.0, SizeClothes::ExtraLarge, PantsLength::Long),
+        ],
+    );
+    wardrobe.get_amount_of_tops();
+    wardrobe.get_amount_of_pants();
+    wardrobe.get_size();
+    wardrobe.get_tops();
+    wardrobe.get_pants();
+
 }
